@@ -8,9 +8,9 @@ class NotContainWords:
         self.words = set(words)
 
     def __call__(self, value):
-        words = set(value.split())
+        words = set(value.lower().split())
         intersection = words & self.words
         if intersection:
-            serializers.ValidationError(
+            raise serializers.ValidationError(
                 "This field should not contain the words: %s." % ", ".join(intersection)
             )

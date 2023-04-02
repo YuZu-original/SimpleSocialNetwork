@@ -17,7 +17,7 @@ import environ
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 env = environ.Env(
-    DEBUG=(bool, False),
+    DEBUG=(bool, True),
     SECRET_KEY=(
         str,
         "django-insecure-_^j7)sdz780&f_2^lvdy4q7$n3d@_w2lq=bnz%ms3hooun!u8b",
@@ -89,7 +89,7 @@ WSGI_APPLICATION = "simple_social_network.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": env.str("DB_NAME", "todolist_postgres"),
+        "NAME": env.str("DB_NAME", "postgres"),
         "USER": env.str("DB_USER", "postgres"),
         "PASSWORD": env.str("DB_PASSWORD", "postgres"),
         "HOST": env.str("DB_HOST", "localhost"),
