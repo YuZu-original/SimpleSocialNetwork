@@ -1,4 +1,5 @@
 from django.contrib.auth import login
+from drf_spectacular.utils import extend_schema
 from rest_framework import permissions
 from rest_framework.generics import CreateAPIView
 from rest_framework.generics import GenericAPIView
@@ -14,6 +15,7 @@ from core.serializers import UpdatePasswordSerializer
 from core.serializers import UserSerializer
 
 
+@extend_schema(tags=["user"])
 class LoginView(GenericAPIView):
     permission_classes = [permissions.AllowAny]
     serializer_class = LoginUserSerializer
@@ -27,6 +29,7 @@ class LoginView(GenericAPIView):
         return Response(user_serializer.data)
 
 
+@extend_schema(tags=["user"])
 class UserViewSet(ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -42,7 +45,12 @@ class UserViewSet(ModelViewSet):
         if self.action in ["list", "retrieve"]:
             return [(permissions.IsAdminUser | permissions.IsAuthenticated)()]
         if self.action in ["update", "partial_update"]:
-            return [(permissions.IsAdminUser | (permissions.IsAuthenticated & IsObjCurrentUserPermission))()]
+            return [
+                (
+                    permissions.IsAdminUser
+                    | (permissions.IsAuthenticated & IsObjCurrentUserPermission)
+                )()
+            ]
         return [permissions.IsAdminUser()]
 
     def perform_create(self, serializer):
@@ -54,6 +62,7 @@ class UserViewSet(ModelViewSet):
         )
 
 
+@extend_schema(tags=["user"])
 class UpdatePasswordView(UpdateAPIView):
     model = User
     permission_classes = [permissions.IsAuthenticated]

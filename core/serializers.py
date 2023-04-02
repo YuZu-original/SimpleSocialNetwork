@@ -29,6 +29,7 @@ class CreateUserSerializer(serializers.ModelSerializer):
         fields = (
             "id",
             "username",
+            "email",
             "phone_number",
             "date_of_birth",
             "password",
@@ -45,12 +46,9 @@ class LoginUserSerializer(serializers.Serializer):
     def validate(self, attrs: dict):
         username = attrs.get("username")
         password = attrs.get("password")
-        print(attrs)
         user = authenticate(username=username, password=password)
-        print(user)
         if user is None:
             raise ValidationError("username or password is incorrect")
-        print(user.username, user.password)
         attrs["user"] = user
         return attrs
 
@@ -62,6 +60,7 @@ class UserSerializer(serializers.ModelSerializer):
         fields = (
             "id",
             "username",
+            "email",
             "phone_number",
             "date_of_birth",
             "created_at",

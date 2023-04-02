@@ -1,0 +1,6 @@
+DEBUG=True
+DB_NAME=ssnetwork_postgres
+DB_USER=postgres
+DB_PASSWORD=postgres
+DB_HOST=postgres
+DB_PORT=5432

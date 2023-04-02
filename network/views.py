@@ -1,11 +1,18 @@
+from drf_spectacular.utils import extend_schema
 from rest_framework import permissions
 from rest_framework.viewsets import ModelViewSet
 
 from network.models import Post, Comment
 from network.permissions import IsAuthorPermission
-from network.serializers import PostSerializer, CommentSerializer, CommentCreateSerializer, PostCreateSerializer
+from network.serializers import (
+    PostSerializer,
+    CommentSerializer,
+    CommentCreateSerializer,
+    PostCreateSerializer,
+)
 
 
+@extend_schema(tags=["post"])
 class PostViewSet(ModelViewSet):
     queryset = Post.objects.all()
 
@@ -22,6 +29,7 @@ class PostViewSet(ModelViewSet):
         return [(permissions.IsAdminUser | IsAuthorPermission)()]
 
 
+@extend_schema(tags=["comment"])
 class CommentViewSet(ModelViewSet):
     queryset = Comment.objects.all()
 

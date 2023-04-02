@@ -1,0 +1,10 @@
+.github/
+venv/
+README.md
+docker-compose.yaml
+.gitignore
+.env
+postgres-data
+pytests.ini
+tests/
+.pytest_cache/
